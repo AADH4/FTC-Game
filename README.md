@@ -1,4 +1,4 @@
-# FTC Bot Lab
+# Robot Rumble
 
 A browser-based, fan-made **FTC robotics game simulator**. Build a robot in Bot Studio, inspect your design, and play solo or two-player matches in DECODE (2025–26) or the fictional BIOBUZZ (2026–27) game scenario.
 
