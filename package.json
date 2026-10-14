@@ -1,0 +1,9 @@
+{
+  "name": "ftc-bot-lab",
+  "version": "1.0.0",
+  "private": true,
+  "description": "FTC robotics browser game simulator",
+  "scripts": {
+    "test": "node --test tests/*.test.js"
+  }
+}
