@@ -768,7 +768,7 @@ function showInfo(kind){
     <li><b>FLOWERS</b>: press <kbd>F</kbd> next to a flower to drop a piece in the top. NECTAR only goes in during the last minute. The alliance with the top-most nectar owns the flower: 2 per piece in it. Bottom-most nectar earns 5.</li>
     <li><b>GARDEN</b>: pieces in your corner garden score 1 each. <kbd>F</kbd> away from a flower drops a piece where you are.</li>
     <li><b>PARK</b>: be partly in your LOADING ZONE at the end of AUTO (5) and the end of the match (5). Leave the wall in AUTO for LEAVE (3).</li></ul>`};
-  $('#infoSheet').innerHTML=kind==='credits'?`<div class="eyebrow">Credits</div><h2>FTC Bot Lab</h2>
+  $('#infoSheet').innerHTML=kind==='credits'?`<div class="eyebrow">Credits</div><h2>Robot Rumble</h2>
    <p>A fan-made FTC practice sandbox. Design, physics, fields and music made for this project with Claude.</p>
    <p style="color:var(--mute)">DECODE (2025–26) and BIOBUZZ (2026–27) are <i>FIRST</i>® Tech Challenge games. <i>FIRST</i>, FTC, DECODE and BIOBUZZ are trademarks of <i>FIRST</i>; this sim is not affiliated with or endorsed by them. Fields are simplified from the Competition Manuals. Part weights, speeds and launch ranges are gameplay estimates, not spec-sheet values.</p>
    <p style="color:var(--mute)">Rules applied: 18 in starting size; DECODE 8 motors / 10 servos / 3 artifacts; BIOBUZZ 8 motors / 8 servos / 4 pieces; exactly 1 robot controller and 1 main battery.</p>
