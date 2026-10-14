@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>FTC Bot Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Barlow:wght@400;500;600&family=JetBrains+Mono:wght@400;600&display=swap">
+<link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+<div id="app">
+<section id="home" class="screen">
+  <div class="hero">
+    <div class="eyebrow">FTC fan sim · 2D sandbox</div>
+    <h1 class="title">FTC<br><span>BOT LAB</span></h1>
+    <p class="tag" id="hTag"></p>
+    <div class="seasons" role="group" aria-label="Season">
+      <button class="chip" data-season="decode" aria-pressed="false">DECODE 2025–26</button>
+      <button class="chip" data-season="biobuzz" aria-pressed="false">BIOBUZZ 2026–27</button>
+    </div>
+    <div class="menu">
+      <button class="btn primary" id="bSolo">Play Solo<small>Drive it yourself or let the computer simulate</small></button>
+      <button class="btn" id="b2p">Vs. a Person<small>Two players, one keyboard, Blue vs Red</small></button>
+      <button class="btn" id="bStudio">Bot Studio<small>Drag parts into the 18 × 18 in box</small></button>
+      <button class="btn" id="bLb">Leaderboard<small>Best scores on this device</small></button>
+      <button class="btn ghost" id="bHelp">How to Play</button>
+      <button class="btn ghost" id="bCredits">Credits</button>
+      <button class="btn ghost wide" id="bMusic">♪ Music: off</button>
+    </div>
+  </div>
+  <div class="side">
+    <div class="card botcard">
+      <div class="eyebrow">Your robot</div>
+      <h3 id="hName" style="font-size:22px;margin-top:4px">Starter Bot</h3>
+      <canvas id="hPrev" width="520" height="520"></canvas>
+      <dl class="kv" id="hStats"></dl>
+    </div>
+    <div class="card">
+      <div class="eyebrow" id="ptsTitle">Point values</div>
+      <dl class="kv" id="ptsList"></dl>
+    </div>
+  </div>
+</section>
+
+<section id="studio" class="screen" hidden>
+  <div class="sthead">
+    <div>
+      <div class="eyebrow">Bot Studio · top view · front is up</div>
+      <div class="row" style="margin-top:4px"><input type="text" id="botName" maxlength="24" aria-label="Robot name" value="Starter Bot"><span class="fit" id="fitTag"></span></div>
+    </div>
+    <div class="row"><button class="btn ghost" id="sHome">Home</button><button class="btn primary" id="sDone">DONE</button></div>
+  </div>
+  <div class="palette">
+    <label class="eyebrow" for="catSel">Part category</label>
+    <select id="catSel"></select>
+    <div class="plist" id="plist"></div>
+    <div class="gridnote">Drag a part onto the grid, or tap it to drop it in the middle.</div>
+  </div>
+  <div class="gridwrap">
+    <canvas id="grid"></canvas>
+    <div class="gridnote">1 square = 1 goBILDA hole (24 mm) · the amber box is the 18 × 18 in starting size limit (19 squares)</div>
+    <div class="tools">
+      <button class="btn" id="tRot">Rotate (R)</button>
+      <button class="btn" id="tDup">Duplicate (D)</button>
+      <button class="btn" id="tDel">Delete (Del)</button>
+      <button class="btn ghost" id="tStarter">Load Starter Bot</button>
+      <button class="btn ghost" id="tClear">Clear</button>
+    </div>
+    <div class="row" id="clearConfirm" hidden><span>Remove every part?</span><button class="btn" id="tClearYes">Yes, clear</button><button class="btn ghost" id="tClearNo">Cancel</button></div>
+  </div>
+  <div class="counters">
+    <div class="card" style="display:grid;gap:12px">
+      <div class="meter" id="mMot"><div class="lab"><span>DC motors</span><span class="mono"></span></div><div class="bar"><i></i></div></div>
+      <div class="meter" id="mSrv"><div class="lab"><span>Servos</span><span class="mono"></span></div><div class="bar"><i></i></div></div>
+      <div class="meter" id="mWt"><div class="lab"><span>Weight</span><span class="mono"></span></div><div class="bar"><i></i></div></div>
+      <div class="meter" id="mSize"><div class="lab"><span>Footprint</span><span class="mono"></span></div><div class="bar"><i></i></div></div>
+    </div>
+    <div class="card"><div class="eyebrow">Selected part</div><div class="selinfo" id="selInfo">Nothing selected.</div></div>
+    <div class="card gridnote" style="text-align:left">Parts power whatever they touch: a motor next to a wheel drives it, a fast motor next to the flywheel spins it, a servo next to the hopper sorts pieces. Frame parts (channels, plates) can sit under other parts; nothing else may overlap.</div>
+  </div>
+</section>
+
+<section id="match" class="screen" hidden>
+  <div class="hud">
+    <div class="score blue"><small id="lBlue">BLUE · YOU</small><span id="sBlue">0</span></div>
+    <div class="clock"><div class="t" id="clock">2:30</div><div class="ph" id="phase">AUTO</div></div>
+    <div class="score red" id="redBox"><small id="lRed">RED</small><span id="sRed">0</span></div>
+  </div>
+  <canvas id="field"></canvas>
+  <div class="toast" id="toast" aria-live="polite"></div>
+  <div class="hudbar">
+    <div class="hold" id="holdB"></div>
+    <div class="row"><button class="btn" id="mSpeed" hidden>Speed 1×</button><button class="btn" id="mStop">Stop match</button></div>
+    <div class="hold" id="holdR"></div>
+  </div>
+  <div class="keys" id="keys"></div>
+  <div class="pad" id="pad">
+    <div class="grp">
+      <button data-k="KeyQ">⟲</button><button data-k="KeyW">▲</button><button data-k="KeyE">⟳</button>
+      <button data-k="KeyA">◀</button><button data-k="KeyS">▼</button><button data-k="KeyD">▶</button>
+    </div>
+    <div class="grp"><button data-k="KeyC">Pick</button><button data-k="KeyF" id="padF">Gate</button><button class="shoot" data-k="Space">Shoot</button></div>
+  </div>
+</section>
+
+<section id="results" class="screen" hidden></section>
+</div>
+
+<div class="modal" id="statsModal" hidden><div class="sheet" id="statsSheet"></div></div>
+<div class="modal" id="setupModal" hidden><div class="sheet" id="setupSheet"></div></div>
+<div class="modal" id="infoModal" hidden><div class="sheet" id="infoSheet"></div></div>
+
+<script src="./src/app.js" defer></script>
+</body>
+</html>
